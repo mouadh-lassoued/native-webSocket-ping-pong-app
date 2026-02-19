@@ -1,18 +1,17 @@
 import {WebSocketServer} from "ws";
-
 const wss = new WebSocketServer({port:8080})
 wss.on("connection",(ws)=>{
     let counter = 0;
-    console.log("connected !")
-    ws.id = crypto.randomUUID();
+    ws.id=crypto.randomUUID();
+    console.log(`connected ! you're ${ws.id.substr(0, 2)}`) 
     ws.on("message",(message)=>{
         if(counter>8){
-            ws.send("enough pongs for you !",ws.id.substr(0,2));
+            ws.send(`enough pongs for you ! ${ws.id.substr(0, 2)}`);
             ws.close();
         }
-        if(message==="ping"){
+        if(message=="ping"){
             counter++;
-            console.log(`received the ping from ${ws.id.substr(0,2)}, sending the pong for ${counter}th time`)
+            console.log(`received the ping from ${ws.id.substr(0, 2)}, sending the pong for ${counter}th time`)
             ws.send("pong")
         }
     })
