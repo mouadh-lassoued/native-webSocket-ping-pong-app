@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <script>
+        const ws = new WebSocket("ws://localhost:8080")
+
+
+        ws.addEventListener("open",()=>{
+            console.log("connected");
+            
+
+            setInterval(()=>{
+                console.log("sending message: ping")
+                ws.send("ping")
+            },1000)
+        })
+
+        ws.addEventListener("message",(event)=>{
+            console.log("message received:",event.data)
+        })
+    </script>
+  </body>
+</html>
